@@ -1,0 +1,45 @@
+$primary-color: rgb(77, 24, 177);
+$secondary-color: rgb(228, 224, 224);
+$light: ("0": rgb(240,240,240),
+    "1": rgb(220,220,220),
+    "3": rgb(200,200,200),
+    "4": rgb(190,190,190),
+    "5": rgb(140,140,140),
+    "6": rgb(100,100,100),
+    "7": rgb(60,60,60)
+    );
+
+@mixin ease-transition($time: .3){
+    transition: all ease #{$time}s 0s;
+}
+
+@mixin header{
+    font-size: 4rem;
+    color: $primary-color;
+}
+
+@mixin input-style{
+    outline: none;
+    border: 1px solid map-get($light,"4");
+    border-radius: 0;
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+    color: map-get($light,"7");
+    @include ease-transition;
+}
+
+@mixin button_style{
+    background: $primary-color;
+    color: $secondary-color;
+    padding: .5rem;
+    border: none;
+    font-size: 1.2rem;
+    outline: none;
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+    @include ease-transition;
+    &:hover{
+        cursor: pointer;
+        background: lighten($primary-color, 7.5);
+    }
+}

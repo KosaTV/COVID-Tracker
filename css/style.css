@@ -1,9 +1,107 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 *, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+:root {
+  font-family: 'Lato';
+}
+
 .page {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
   height: 100vh;
+}
+
+.main__header {
+  font-size: 4rem;
+  color: #4d18b1;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-cnt {
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+
+.input-cnt .cover {
+  display: flex;
+  height: 100%;
+}
+
+.input-cnt__field {
+  height: 100%;
+  width: 250px;
+  padding: .5rem;
+  font-size: 1.3rem;
+  outline: none;
+  border: 1px solid #bebebe;
+  border-radius: 0;
+  border-top-left-radius: .5rem;
+  border-bottom-left-radius: .5rem;
+  color: #3c3c3c;
+  transition: all ease 0.3s 0s;
+}
+
+.input-cnt__button {
+  height: 100%;
+  width: 100px;
+  background: #4d18b1;
+  color: #e4e0e0;
+  padding: .5rem;
+  border: none;
+  font-size: 1.2rem;
+  outline: none;
+  border-top-right-radius: .5rem;
+  border-bottom-right-radius: .5rem;
+  transition: all ease 0.3s 0s;
+}
+
+.input-cnt__button:hover {
+  cursor: pointer;
+  background: #5c1dd3;
+}
+
+.cover--listed {
+  position: relative;
+}
+
+.input--typed {
+  border-bottom-left-radius: 0;
+}
+
+.input-list {
+  display: none;
+  width: 100%;
+  list-style: none;
+  border: 1px solid #c8c8c8;
+}
+
+.input-list--show {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: block;
+  border-top: none;
+}
+
+.input-list__item {
+  padding: .5rem;
+  background: white;
+  color: #3c3c3c;
+  user-select: none;
+}
+
+.input-list__item:hover {
+  background: #e6e6e6;
 }
