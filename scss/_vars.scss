@@ -9,8 +9,8 @@ $light: ("0": rgb(240,240,240),
     "7": rgb(60,60,60)
     );
 
-@mixin ease-transition($time: .3){
-    transition: all ease #{$time}s 0s;
+@mixin ease-transition($property: all, $time: .3){
+    transition: #{$property} ease #{$time}s 0s;
 }
 
 @mixin header{
@@ -25,7 +25,6 @@ $light: ("0": rgb(240,240,240),
     border-top-left-radius: .5rem;
     border-bottom-left-radius: .5rem;
     color: map-get($light,"7");
-    @include ease-transition;
 }
 
 @mixin button_style{
@@ -37,7 +36,7 @@ $light: ("0": rgb(240,240,240),
     outline: none;
     border-top-right-radius: .5rem;
     border-bottom-right-radius: .5rem;
-    @include ease-transition;
+    @include ease-transition("background");
     &:hover{
         cursor: pointer;
         background: lighten($primary-color, 7.5);

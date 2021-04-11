@@ -62,9 +62,11 @@
     border: 1px solid map-get($light,"3");
     &--show{
         position: absolute;
+        display: inline-block;
+        overflow: auto;
+        max-height: 176px;
         top: 100%;
         left: 0;
-        display: block;
         border-top: none;
     }
 
@@ -73,7 +75,7 @@
         background: white;
         color: map-get($light,"7");
         &:hover{
-            background: darken(white, 10);
+        background: darken($secondary-color, 2);
         }
         user-select: none;
     }

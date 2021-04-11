@@ -50,7 +50,6 @@
   border-top-left-radius: .5rem;
   border-bottom-left-radius: .5rem;
   color: #3c3c3c;
-  transition: all ease 0.3s 0s;
 }
 
 .input-cnt__button {
@@ -64,7 +63,7 @@
   outline: none;
   border-top-right-radius: .5rem;
   border-bottom-right-radius: .5rem;
-  transition: all ease 0.3s 0s;
+  transition: background ease 0.3s 0s;
 }
 
 .input-cnt__button:hover {
@@ -89,9 +88,11 @@
 
 .input-list--show {
   position: absolute;
+  display: inline-block;
+  overflow: auto;
+  max-height: 176px;
   top: 100%;
   left: 0;
-  display: block;
   border-top: none;
 }
 
@@ -103,5 +104,5 @@
 }
 
 .input-list__item:hover {
-  background: #e6e6e6;
+  background: #dfdbdb;
 }
