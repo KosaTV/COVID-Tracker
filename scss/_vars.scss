@@ -1,12 +1,16 @@
-$primary-color: rgb(77, 24, 177);
+$primary-color: rgb(0, 120, 218);
 $secondary-color: rgb(228, 224, 224);
+$good: rgb(110, 177, 80);
+$medium: rgb(248, 161, 0);
+$bad: rgb(189, 82, 82);
 $light: ("0": rgb(240,240,240),
     "1": rgb(220,220,220),
     "3": rgb(200,200,200),
     "4": rgb(190,190,190),
     "5": rgb(140,140,140),
     "6": rgb(100,100,100),
-    "7": rgb(60,60,60)
+    "7": rgb(60,60,60),
+    "8": rgb(20,20,20)
     );
 
 @mixin ease-transition($property: all, $time: .3){

@@ -26,13 +26,15 @@ class ListedInput {
     }
 
     addingElements(){
+        let code = null;
         this.list.innerHTML = "";
         this.items.forEach(item=>{
             const li = document.createElement("li");
-            li.textContent = item;
+            li.textContent = item[0];
             li.classList.add("input-list__item");
             this.list.appendChild(li);
         });
+        if(this.items.length === 1) this.input.dataset.code = code;
     }
 
     show(){
@@ -40,7 +42,7 @@ class ListedInput {
                 this.items = await fn(...args);
                 this.addingElements();
                 if(this.input.value.length){
-                    this.list.classList.add("input-list--show") 
+                    this.list.classList.add("input-list--show");
                     this.input.classList.add("input--typed");
                 } else{
                     if(!this.options.showOnStart){
@@ -62,6 +64,13 @@ class ListedInput {
                 this.list.classList.remove("input-list--show");
                 this.input.classList.remove("input--typed");
                 this.input.removeEventListener("input",ShowWhileTyping.bind(this, this.options.function,this.options.arguments));
+            });
+
+            this.list.addEventListener("mousedown",e=>{
+                if(e.target.closest(".input-list__item")){
+                    const item = e.target.closest(".input-list__item");
+                    this.input.value = item.textContent;
+                }
             });
     }
 }

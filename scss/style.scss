@@ -4,21 +4,246 @@
     font-family: 'Lato';
 }
 
+::selection{
+    background: $primary-color;
+    color: $secondary-color;
+}
+
 .page{
     display: flex;
     align-items: flex-start;
     justify-content: center;
     height: 100vh;
+    background: lighten($secondary-color,8);
 }
 
-.main__header{
+.logo{
+    display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+    padding: 2rem;
+    width: 100vw;
+    background: rgb(235, 235, 235);
+    &__link{
+        text-decoration: none;
+        color: $primary-color;
+    }
+
+    &__svg{
+        -webkit-user-drag: none;
+        height: 120px;
+    }
     @include header;
 }
 
-.content{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.country{
+    padding: 1rem;
+
+    &__title{
+        color: map-get($light, "6");
+        font-size: 3.5rem;
+        padding: 1rem;
+    }
+
+    &__info{
+        .base-info{
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            .boxes{
+                padding-top: .7rem;
+                width: 100%;
+                display: flex;
+                padding: 2rem 0;
+                justify-content: space-around;
+                border-radius: 50px;
+                box-shadow: 0 0 10px -5px black;
+            }
+        }
+
+        .statistics{
+            display: inline-block;
+            padding: 1rem;
+            margin: 1rem;
+            &__info{
+                margin-bottom: .5rem;
+                display: block;
+                text-align: center;
+                width: 300px;
+                color: $primary-color;
+            }
+
+            .legend{
+                display: flex;
+                justify-content: center;
+                &__mark{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    margin: .4rem;
+                    .color{
+                        width: 25px;
+                        height: 25px;
+                        margin: .2rem 0;
+                        box-shadow:
+                        0 0 1px 1px black,
+                        0 0 1px 2px white,
+                        0 0 2px 3px black
+                    }
+
+                    &--yellow{
+                        .color{
+                            background: $medium;
+                        }
+                    }
+
+                    &--red{
+                        .color{
+                            background: $bad;
+                        }
+                    }
+
+                    &--green{
+                        .color{
+                            background: $good;
+                        }
+                    }
+
+                    .label{
+                        color: map-get($light, "7");
+                    }
+                }
+            }
+        }
+
+        .chart{
+            position: relative;
+            width: 320px;
+            height: 280px;
+            border: 1px solid $primary-color;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            overflow: hidden;
+            background-size: cover;
+            overflow: hidden;
+
+            &__bg{
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                transform: scale(6.02);
+            }
+            
+            &__post{
+                position: relative;
+                width: 56px;
+                height: 150px;
+            }
+
+            &__post--yellow{
+                background: $medium;
+            }
+
+            &__post--red{
+                background: $bad;
+            }
+
+            &__post--green{
+                background: $good;
+            }
+        }
+
+        .count{
+            position: absolute;
+            top: 0;
+            left: 50%;
+            color: $primary-color;
+            transform: translate(-50%,-100%);
+        }
+    }
+
+    .box-info{
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: center;
+        &__header{
+            display: flex;
+            justify-content: center;
+            box-info__title{
+                font-size: 2rem;
+                color: map-get($light, "6");
+            }
+
+            .box-info__icon{
+                font-size: 1.5rem;
+                margin: 0 1rem;
+
+                &--viruses{
+                    color: $medium;
+                }
+
+                &--skull{
+                    color: $bad;
+                }
+
+                &--heart{
+                    color: $good;
+                }
+            }
+        }
+
+        &__count{
+            font-size: 1.7rem;
+
+            &--confirmed{
+                color: $medium;
+            }
+
+            &--lost{
+                color: $bad;
+            }
+
+            &--saved{
+                color: $good;
+            }
+        }
+    }
+
+    .place-info{
+        margin: 1rem;
+        text-align: end;
+        &__title{
+            font-size: .9rem;
+            color: map-get($light, "5");
+        }
+
+        &__count{
+            font-size: .8rem;
+            color: map-get($light, "5");
+        }
+    }
+
+    .flag{
+        margin-top: .5rem;
+        margin: 1.5rem;
+        width: 200px; //I'll delete it
+        height: 120px; //I'll delete it
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 15px 45px -5px rgb(161, 161, 161);
+        overflow: hidden;
+        &__svg{
+            -webkit-user-drag: none;
+            max-width: 90px;
+            max-height: 50px;
+        }
+    }
 }
 
 .input-cnt{
@@ -34,7 +259,7 @@
 
     &__field{
         height: 100%;
-        width: 250px;
+        width: 400px;
         padding: .5rem;
         font-size: 1.3rem;
         @include input-style;
@@ -42,7 +267,7 @@
 
     &__button{
         height: 100%;
-        width: 100px;
+        width: 90px;
         @include button-style;
     }
 }
@@ -74,6 +299,8 @@
         padding: .5rem;
         background: white;
         color: map-get($light,"7");
+        font-size: 1rem;
+
         &:hover{
         background: darken($secondary-color, 2);
         }

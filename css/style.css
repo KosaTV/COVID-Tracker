@@ -9,22 +9,245 @@
   font-family: 'Lato';
 }
 
+::selection {
+  background: #0078da;
+  color: #e4e0e0;
+}
+
 .page {
   display: flex;
   align-items: flex-start;
   justify-content: center;
   height: 100vh;
+  background: #f7f6f6;
 }
 
-.main__header {
+.logo {
+  display: flex;
+  align-items: center;
+  flex-flow: column wrap;
+  padding: 2rem;
+  width: 100vw;
+  background: #ebebeb;
   font-size: 4rem;
-  color: #4d18b1;
+  color: #0078da;
 }
 
-.content {
+.logo__link {
+  text-decoration: none;
+  color: #0078da;
+}
+
+.logo__svg {
+  -webkit-user-drag: none;
+  height: 120px;
+}
+
+.country {
+  padding: 1rem;
+}
+
+.country__title {
+  color: #646464;
+  font-size: 3.5rem;
+  padding: 1rem;
+}
+
+.country__info .base-info {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+}
+
+.country__info .base-info .boxes {
+  padding-top: .7rem;
+  width: 100%;
+  display: flex;
+  padding: 2rem 0;
+  justify-content: space-around;
+  border-radius: 50px;
+  box-shadow: 0 0 10px -5px black;
+}
+
+.country__info .statistics {
+  display: inline-block;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.country__info .statistics__info {
+  margin-bottom: .5rem;
+  display: block;
+  text-align: center;
+  width: 300px;
+  color: #0078da;
+}
+
+.country__info .statistics .legend {
+  display: flex;
+  justify-content: center;
+}
+
+.country__info .statistics .legend__mark {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: .4rem;
+}
+
+.country__info .statistics .legend__mark .color {
+  width: 25px;
+  height: 25px;
+  margin: .2rem 0;
+  box-shadow: 0 0 1px 1px black, 0 0 1px 2px white, 0 0 2px 3px black;
+}
+
+.country__info .statistics .legend__mark--yellow .color {
+  background: #f8a100;
+}
+
+.country__info .statistics .legend__mark--red .color {
+  background: #bd5252;
+}
+
+.country__info .statistics .legend__mark--green .color {
+  background: #6eb150;
+}
+
+.country__info .statistics .legend__mark .label {
+  color: #3c3c3c;
+}
+
+.country__info .chart {
+  position: relative;
+  width: 320px;
+  height: 280px;
+  border: 1px solid #0078da;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  overflow: hidden;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.country__info .chart__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(6.02);
+}
+
+.country__info .chart__post {
+  position: relative;
+  width: 56px;
+  height: 150px;
+}
+
+.country__info .chart__post--yellow {
+  background: #f8a100;
+}
+
+.country__info .chart__post--red {
+  background: #bd5252;
+}
+
+.country__info .chart__post--green {
+  background: #6eb150;
+}
+
+.country__info .count {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  color: #0078da;
+  transform: translate(-50%, -100%);
+}
+
+.country .box-info {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.country .box-info__header {
+  display: flex;
+  justify-content: center;
+}
+
+.country .box-info__header box-info__title {
+  font-size: 2rem;
+  color: #646464;
+}
+
+.country .box-info__header .box-info__icon {
+  font-size: 1.5rem;
+  margin: 0 1rem;
+}
+
+.country .box-info__header .box-info__icon--viruses {
+  color: #f8a100;
+}
+
+.country .box-info__header .box-info__icon--skull {
+  color: #bd5252;
+}
+
+.country .box-info__header .box-info__icon--heart {
+  color: #6eb150;
+}
+
+.country .box-info__count {
+  font-size: 1.7rem;
+}
+
+.country .box-info__count--confirmed {
+  color: #f8a100;
+}
+
+.country .box-info__count--lost {
+  color: #bd5252;
+}
+
+.country .box-info__count--saved {
+  color: #6eb150;
+}
+
+.country .place-info {
+  margin: 1rem;
+  text-align: end;
+}
+
+.country .place-info__title {
+  font-size: .9rem;
+  color: #8c8c8c;
+}
+
+.country .place-info__count {
+  font-size: .8rem;
+  color: #8c8c8c;
+}
+
+.country .flag {
+  margin-top: .5rem;
+  margin: 1.5rem;
+  width: 200px;
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 15px 45px -5px #a1a1a1;
+  overflow: hidden;
+}
+
+.country .flag__svg {
+  -webkit-user-drag: none;
+  max-width: 90px;
+  max-height: 50px;
 }
 
 .input-cnt {
@@ -41,7 +264,7 @@
 
 .input-cnt__field {
   height: 100%;
-  width: 250px;
+  width: 400px;
   padding: .5rem;
   font-size: 1.3rem;
   outline: none;
@@ -54,8 +277,8 @@
 
 .input-cnt__button {
   height: 100%;
-  width: 100px;
-  background: #4d18b1;
+  width: 90px;
+  background: #0078da;
   color: #e4e0e0;
   padding: .5rem;
   border: none;
@@ -68,7 +291,7 @@
 
 .input-cnt__button:hover {
   cursor: pointer;
-  background: #5c1dd3;
+  background: #018dff;
 }
 
 .cover--listed {
@@ -100,6 +323,7 @@
   padding: .5rem;
   background: white;
   color: #3c3c3c;
+  font-size: 1rem;
   user-select: none;
 }
 
