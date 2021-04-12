@@ -1,5 +1,15 @@
 @import "config", "reset", "vars";
 
+@keyframes rotate{
+    0%{
+        transform: rotate(0);
+    }
+
+    100%{
+        transform: rotate(1turn);
+    }
+}
+
 :root{
     font-family: 'Lato';
 }
@@ -37,8 +47,6 @@
 }
 
 .country{
-    padding: 1rem;
-
     &__title{
         color: map-get($light, "6");
         font-size: 3.5rem;
@@ -62,19 +70,20 @@
         }
 
         .statistics{
-            display: inline-block;
-            padding: 1rem;
-            margin: 1rem;
+            display: flex;
+            width: 320px;
+            flex-direction: column;
+            margin: 2rem auto;
             &__info{
                 margin-bottom: .5rem;
                 display: block;
                 text-align: center;
-                width: 300px;
                 color: $primary-color;
             }
 
             .legend{
                 display: flex;
+                width: 100%;
                 justify-content: center;
                 &__mark{
                     display: flex;
@@ -119,7 +128,7 @@
 
         .chart{
             position: relative;
-            width: 320px;
+            width: 100%;
             height: 280px;
             border: 1px solid $primary-color;
             display: flex;
@@ -215,7 +224,7 @@
     }
 
     .place-info{
-        margin: 1rem;
+        padding: 1rem;
         text-align: end;
         &__title{
             font-size: .9rem;
@@ -231,8 +240,6 @@
     .flag{
         margin-top: .5rem;
         margin: 1.5rem;
-        width: 200px; //I'll delete it
-        height: 120px; //I'll delete it
         display: flex;
         align-items: center;
         justify-content: center;
@@ -240,8 +247,8 @@
         overflow: hidden;
         &__svg{
             -webkit-user-drag: none;
-            max-width: 90px;
-            max-height: 50px;
+            max-width: 200px;
+            max-height: 120px;
         }
     }
 }
@@ -305,5 +312,41 @@
         background: darken($secondary-color, 2);
         }
         user-select: none;
+    }
+}
+
+
+.content{
+    position: relative;
+
+    .loading-bar{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 50px;
+        height: 50px;
+        border: 5px solid map-get($light,"1");
+        border-top: 5px solid $primary-color;
+        border-radius: 50%;
+        animation: rotate .5s 0s ease infinite forwards;
+    }
+
+    .error{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        text-align: center;
+        transform: translate(-50%,-50%);
+        &__com{
+            font-size: 2rem;
+            color: $bad;
+        }
+
+        &__face{
+            font-size: 3rem;
+            color: $medium;
+        }
+
     }
 }

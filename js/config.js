@@ -30,11 +30,10 @@ class ListedInput {
         this.list.innerHTML = "";
         this.items.forEach(item=>{
             const li = document.createElement("li");
-            li.textContent = item[0];
+            li.textContent = item;
             li.classList.add("input-list__item");
             this.list.appendChild(li);
         });
-        if(this.items.length === 1) this.input.dataset.code = code;
     }
 
     show(){

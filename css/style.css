@@ -5,6 +5,15 @@
   box-sizing: border-box;
 }
 
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
 :root {
   font-family: 'Lato';
 }
@@ -43,10 +52,6 @@
   height: 120px;
 }
 
-.country {
-  padding: 1rem;
-}
-
 .country__title {
   color: #646464;
   font-size: 3.5rem;
@@ -70,21 +75,22 @@
 }
 
 .country__info .statistics {
-  display: inline-block;
-  padding: 1rem;
-  margin: 1rem;
+  display: flex;
+  width: 320px;
+  flex-direction: column;
+  margin: 2rem auto;
 }
 
 .country__info .statistics__info {
   margin-bottom: .5rem;
   display: block;
   text-align: center;
-  width: 300px;
   color: #0078da;
 }
 
 .country__info .statistics .legend {
   display: flex;
+  width: 100%;
   justify-content: center;
 }
 
@@ -121,7 +127,7 @@
 
 .country__info .chart {
   position: relative;
-  width: 320px;
+  width: 100%;
   height: 280px;
   border: 1px solid #0078da;
   display: flex;
@@ -218,7 +224,7 @@
 }
 
 .country .place-info {
-  margin: 1rem;
+  padding: 1rem;
   text-align: end;
 }
 
@@ -235,8 +241,6 @@
 .country .flag {
   margin-top: .5rem;
   margin: 1.5rem;
-  width: 200px;
-  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -246,8 +250,8 @@
 
 .country .flag__svg {
   -webkit-user-drag: none;
-  max-width: 90px;
-  max-height: 50px;
+  max-width: 200px;
+  max-height: 120px;
 }
 
 .input-cnt {
@@ -329,4 +333,39 @@
 
 .input-list__item:hover {
   background: #dfdbdb;
+}
+
+.content {
+  position: relative;
+}
+
+.content .loading-bar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 5px solid gainsboro;
+  border-top: 5px solid #0078da;
+  border-radius: 50%;
+  animation: rotate .5s 0s ease infinite forwards;
+}
+
+.content .error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.content .error__com {
+  font-size: 2rem;
+  color: #bd5252;
+}
+
+.content .error__face {
+  font-size: 3rem;
+  color: #f8a100;
 }
