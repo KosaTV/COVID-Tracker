@@ -36,6 +36,14 @@ class ListedInput {
         });
     }
 
+    debuonce(fn, delay){
+        let timer;
+        return function(){
+            clearTimeout(timer);
+            timer = setTimeout(fn,delay);
+        }
+    }
+
     show(){
             async function ShowWhileTyping(fn,args){
                 this.items = await fn(...args);
@@ -56,13 +64,13 @@ class ListedInput {
                 this.list.classList.add("input-list--show");
                 this.input.classList.add("input--typed");
             }
-            this.input.addEventListener("input",ShowWhileTyping.bind(this, this.options.function,this.options.arguments));
+            this.input.addEventListener("input",this.debuonce(ShowWhileTyping.bind(this, this.options.function,this.options.arguments),250));
             });
 
             this.input.addEventListener("blur",e=>{
                 this.list.classList.remove("input-list--show");
                 this.input.classList.remove("input--typed");
-                this.input.removeEventListener("input",ShowWhileTyping.bind(this, this.options.function,this.options.arguments));
+                this.input.removeEventListener("input",this.debuonce(ShowWhileTyping.bind(this, this.options.function,this.options.arguments),250));
             });
 
             this.list.addEventListener("mousedown",e=>{

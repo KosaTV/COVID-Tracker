@@ -19,10 +19,7 @@
     color: $secondary-color;
 }
 
-.page{
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
+.page{    
     height: 100vh;
     background: lighten($secondary-color,8);
 }
@@ -32,7 +29,6 @@
     align-items: center;
     flex-flow: column wrap;
     padding: 2rem;
-    width: 100vw;
     background: rgb(235, 235, 235);
     &__link{
         text-decoration: none;
@@ -47,30 +43,72 @@
 }
 
 .country{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
     &__title{
         color: map-get($light, "6");
-        font-size: 3.5rem;
-        padding: 1rem;
+        font-size: 5rem;
+    }
+
+    &__flag{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 15px 45px -5px rgb(161, 161, 161);
+        overflow: hidden;
+        .flag-svg{
+            -webkit-user-drag: none;
+            max-width: 200px;
+            max-height: 120px;
+        }
     }
 
     &__info{
         .base-info{
             display: flex;
-            justify-content: flex-start;
-            flex-wrap: nowrap;
+            align-items: center;
+            flex-flow: column nowrap;
+
+            &__title{
+                font-size: 3rem;
+                color: map-get($light, "5");
+                padding: .5rem;
+            }
+
             .boxes{
                 padding-top: .7rem;
-                width: 100%;
                 display: flex;
                 padding: 2rem 0;
                 justify-content: space-around;
                 border-radius: 50px;
                 box-shadow: 0 0 10px -5px black;
+
+                .box-info{
+                    padding: 0 5rem;
+                }
             }
+
+            .place-info{
+                align-self: flex-end;
+                text-align: end;
+                padding: 1rem;
+                &__title{
+                    font-size: .9rem;
+                    color: map-get($light, "5");
+                }
+        
+                &__count{
+                    font-size: .8rem;
+                    color: map-get($light, "5");
+                }
+            }
+
         }
 
         .statistics{
-            display: flex;
+            // display: flex; // I'll unlock this
+            display: none;
             width: 320px;
             flex-direction: column;
             margin: 2rem auto;
@@ -137,15 +175,6 @@
             overflow: hidden;
             background-size: cover;
             overflow: hidden;
-
-            &__bg{
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                transform: scale(6.02);
-            }
             
             &__post{
                 position: relative;
@@ -222,35 +251,6 @@
             }
         }
     }
-
-    .place-info{
-        padding: 1rem;
-        text-align: end;
-        &__title{
-            font-size: .9rem;
-            color: map-get($light, "5");
-        }
-
-        &__count{
-            font-size: .8rem;
-            color: map-get($light, "5");
-        }
-    }
-
-    .flag{
-        margin-top: .5rem;
-        margin: 1.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 15px 45px -5px rgb(161, 161, 161);
-        overflow: hidden;
-        &__svg{
-            -webkit-user-drag: none;
-            max-width: 200px;
-            max-height: 120px;
-        }
-    }
 }
 
 .input-cnt{
@@ -260,6 +260,7 @@
     height: 40px;
 
     .cover{
+        z-index: 1;
         display: flex;
         height: 100%;
     }
@@ -321,6 +322,8 @@
 
     .loading-bar{
         position: absolute;
+        z-index: 100;
+        margin: 1rem;
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);
@@ -348,5 +351,19 @@
             color: $medium;
         }
 
+    }
+}
+
+.disabled{
+    opacity: .5;
+}
+
+.chart-icon{
+    &--grow{
+        color: $bad;
+    }
+
+    &--fall{
+        color: $good;
     }
 }
