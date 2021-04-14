@@ -55,10 +55,18 @@ searchButton.addEventListener("click",e=>{
     cry.classList.add("far","fa-sad-tear", "error__face");
     com.textContent = "We cannot connect with server";
     com.classList.add("error__com");
+    error.appendChild(com);
+    error.appendChild(cry);
 
     const value = searchField.value.toLowerCase();
     fetch(`https://api.covid19api.com/summary`)
-    .then(res=>res.json())
+    .then(res=>{
+        if(res.status === 200){
+            return res.json()
+        }
+        content.appendChild(error);
+        return Promise.reject("Can not get data from server");
+    })
     .then(res=>{
         const currentCountry = res.Countries.filter(country=>{
             if(country.Country.toLowerCase() === value) return country.Country;
@@ -87,18 +95,20 @@ searchButton.addEventListener("click",e=>{
                     const month = addZero(now.getMonth()+1);
 
                     const lastMonth = addZero(now.getMonth());
-                    const lastWeek = addZero(now.getDate()-7);
-                    const lastDay = addZero(now.getDate()-1);
+                    const lastWeek = new Date();
+                    lastWeek.setDate(now.getDate()-7);
+                    const lastDay = new Date();
+                    lastDay.setDate(now.getDate()-1);
 
-                    const countryLastDay = await fetch(`https://api.covid19api.com/country/${noSpaceName}?from=${year}-${lastMonth}-${day}T00:00:00Z&to=${year}-${month}-${day}T00:00:00Z`)
+                    const countryLastDay = await fetch(`https://api.covid19api.com/country/${noSpaceName}?from=${lastDay.getFullYear()}-${addZero(lastDay.getMonth()+1)}-${addZero(lastDay.getDate())}T00:00:00Z&to=${year}-${month}-${day}T00:00:00Z`)
                     .then(res=>res.json())
                     .then(res=>res[0]);
 
-                    const countryLastWeek = await fetch(`https://api.covid19api.com/country/${noSpaceName}?from=${year}-${month}-${lastWeek}T00:00:00Z&to=${year}-${month}-${day}T00:00:00Z`)
+                    const countryLastWeek = await fetch(`https://api.covid19api.com/country/${noSpaceName}?from=${lastWeek.getFullYear()}-${addZero(lastWeek.getMonth()+1)}-${addZero(lastWeek.getDate())}T00:00:00Z&to=${year}-${month}-${day}T00:00:00Z`)
                     .then(res=>res.json())
                     .then(res=>res[0]);
 
-                    const countryLastMonth = await fetch(`https://api.covid19api.com/country/${noSpaceName}?from=${year}-${month}-${lastDay}T00:00:00Z&to=${year}-${month}-${day}T00:00:00Z`)
+                    const countryLastMonth = await fetch(`https://api.covid19api.com/country/${noSpaceName}?from=${year}-${lastMonth}-${day}T00:00:00Z&to=${year}-${month}-${day}T00:00:00Z`)
                     .then(res=>res.json())
                     .then(res=>res[0]);
 
@@ -174,8 +184,6 @@ searchButton.addEventListener("click",e=>{
                     </div>
                     `;
                     } else{
-                        error.appendChild(com);
-                        error.appendChild(cry);
                         content.append(error);
                     }
 
@@ -288,14 +296,14 @@ searchButton.addEventListener("click",e=>{
                                             <span class="box-info__header">
                                                 <h2 class="box-info__title">Dead</h2><i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i>
                                             </span>
-                                            <span class="box-info__count box-info__count--lost">${checkGrow(lastWeekConfirmed)}</span>
+                                            <span class="box-info__count box-info__count--lost">${checkGrow(lastWeekDeadths)}</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
                                                 <h2 class="box-info__title">Recovered</h2><i class="box-info__icon box-info__icon--heart fas fa-heart"></i>
                                             </span>
-                                            <span class="box-info__count box-info__count--saved">${checkGrow(lastWeekConfirmed)}</span>
+                                            <span class="box-info__count box-info__count--saved">${checkGrow(lastWeekrecovered)}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -360,14 +368,14 @@ searchButton.addEventListener("click",e=>{
                                             <span class="box-info__header">
                                                 <h2 class="box-info__title">Dead</h2><i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i>
                                             </span>
-                                            <span class="box-info__count box-info__count--lost">${checkGrow(lastMonthConfirmed)}</span>
+                                            <span class="box-info__count box-info__count--lost">${checkGrow(lastMonthDeadths)}</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
                                                 <h2 class="box-info__title">Recovered</h2><i class="box-info__icon box-info__icon--heart fas fa-heart"></i>
                                             </span>
-                                            <span class="box-info__count box-info__count--saved">${checkGrow(lastMonthConfirmed)}</span>
+                                            <span class="box-info__count box-info__count--saved">${checkGrow(lastMonthrecovered)}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -417,8 +425,6 @@ searchButton.addEventListener("click",e=>{
         })();
     })
     .catch(err=>{
-        error.appendChild(com);
-        error.appendChild(cry);
         content.append(error);
     })
     .finally(()=>{

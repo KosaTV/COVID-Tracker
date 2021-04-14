@@ -28,12 +28,14 @@ class ListedInput {
     addingElements(){
         let code = null;
         this.list.innerHTML = "";
-        this.items.forEach(item=>{
+        if(this.items){
+            this.items.forEach(item=>{
             const li = document.createElement("li");
             li.textContent = item;
             li.classList.add("input-list__item");
             this.list.appendChild(li);
         });
+        }
     }
 
     debuonce(fn, delay){
