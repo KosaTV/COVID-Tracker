@@ -96,21 +96,32 @@ searchButton.addEventListener("click",e=>{
 
                     const lastMonth = addZero(now.getMonth());
                     const lastWeek = new Date();
-                    lastWeek.setDate(now.getDate()-7);
+                    lastWeek.setDate(now.getDate()-8);
                     const lastDay = new Date();
-                    lastDay.setDate(now.getDate()-1);
+                    lastDay.setDate(now.getDate()-2);
+                    const lastDayed = new Date();
+                    lastDayed.setDate(now.getDate());
 
                     const countryLastDay = await fetch(`https://api.covid19api.com/country/${noSpaceName}?from=${lastDay.getFullYear()}-${addZero(lastDay.getMonth()+1)}-${addZero(lastDay.getDate())}T00:00:00Z&to=${year}-${month}-${day}T00:00:00Z`)
                     .then(res=>res.json())
-                    .then(res=>res[0]);
+                    .then(res=>{
+                            res.pop();
+                        return res;
+                    });
 
                     const countryLastWeek = await fetch(`https://api.covid19api.com/country/${noSpaceName}?from=${lastWeek.getFullYear()}-${addZero(lastWeek.getMonth()+1)}-${addZero(lastWeek.getDate())}T00:00:00Z&to=${year}-${month}-${day}T00:00:00Z`)
                     .then(res=>res.json())
-                    .then(res=>res[0]);
+                    .then(res=>{
+                            res.pop();
+                        return res;
+                    });
 
                     const countryLastMonth = await fetch(`https://api.covid19api.com/country/${noSpaceName}?from=${year}-${lastMonth}-${day}T00:00:00Z&to=${year}-${month}-${day}T00:00:00Z`)
                     .then(res=>res.json())
-                    .then(res=>res[0]);
+                    .then(res=>{
+                            res.pop();
+                        return res;
+                    });
 
                     if(country){
                         resultCnt.innerHTML = `
@@ -124,21 +135,21 @@ searchButton.addEventListener("click",e=>{
                                 <div class="boxes">
                                     <div class="box-info">
                                         <span class="box-info__header">
-                                            <h2 class="box-info__title">Confirmed</h2><i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i>
+                                            <h2 class="box-info__title">Confirmed<i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i></h2>
                                         </span>
                                         <span class="box-info__count box-info__count--confirmed">${confirmed}</span>
                                     </div>
         
                                     <div class="box-info">
                                         <span class="box-info__header">
-                                            <h2 class="box-info__title">Dead</h2><i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i>
+                                            <h2 class="box-info__title">Dead<i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i></h2>
                                         </span>
                                         <span class="box-info__count box-info__count--lost">${dead}</span>
                                     </div>
         
                                     <div class="box-info">
                                         <span class="box-info__header">
-                                            <h2 class="box-info__title">Recovered</h2><i class="box-info__icon box-info__icon--heart fas fa-heart"></i>
+                                            <h2 class="box-info__title">Recovered<i class="box-info__icon box-info__icon--heart fas fa-heart"></i></h2>
                                         </span>
                                         <span class="box-info__count box-info__count--saved">${saved}</span>
                                     </div>
@@ -188,22 +199,21 @@ searchButton.addEventListener("click",e=>{
                     }
 
                     if(countryLastDay || countryLastWeek || countryLastMonth){
+                            const lastDayConfirmed = countryLastDay[countryLastDay.length-1].Confirmed - countryLastDay[0].Confirmed;
+                            const lastDayDeadths = countryLastDay[countryLastDay.length-1].Deaths - countryLastDay[0].Deaths;
+                            const lastDayrecovered = countryLastDay[countryLastDay.length-1].Recovered - countryLastDay[0].Recovered;
 
-                            const lastDayConfirmed = confirmed - countryLastDay.Confirmed;
-                            const lastDayDeadths = dead - countryLastDay.Deaths;
-                            const lastDayrecovered = saved - countryLastDay.Recovered;
+                            const lastWeekConfirmed = countryLastWeek[countryLastWeek.length-1].Confirmed - countryLastWeek[0].Confirmed;
+                            const lastWeekDeadths = countryLastWeek[countryLastWeek.length-1].Deaths - countryLastWeek[0].Deaths;
+                            const lastWeekrecovered = countryLastWeek[countryLastWeek.length-1].Recovered - countryLastWeek[0].Recovered;
 
-                            const lastWeekConfirmed = confirmed - countryLastWeek.Confirmed;
-                            const lastWeekDeadths = dead - countryLastWeek.Deaths;
-                            const lastWeekrecovered = saved - countryLastWeek.Recovered;
-
-                            const lastMonthConfirmed = confirmed - countryLastMonth.Confirmed;
-                            const lastMonthDeadths = dead - countryLastMonth.Deaths;
-                            const lastMonthrecovered = saved - countryLastMonth.Recovered;
+                            const lastMonthConfirmed = countryLastMonth[countryLastMonth.length-1].Confirmed - countryLastMonth[0].Confirmed;
+                            const lastMonthDeadths = countryLastMonth[countryLastMonth.length-1].Deaths - countryLastMonth[0].Deaths;
+                            const lastMonthrecovered = countryLastMonth[countryLastMonth.length-1].Recovered - countryLastMonth[0].Recovered;
 
                             function checkGrow(num){
-                                if(num > 0) return `<i class="fas fa-chart-line chart-icon--grow"></i>+${num}`
-                                return `<i class="fas fa-chart-line-down chart-icon--fall"></i>${num}`
+                                if(num > 0) return `<i class="fas fa-chart-line chart-icon chart-icon--grow"></i>+${num}`
+                                return `<i class="fas fa-chart-line-down chart-icon chart-icon--fall"></i>${num}`
                             }
 
                         if(countryLastDay){
@@ -215,29 +225,25 @@ searchButton.addEventListener("click",e=>{
                                     <div class="boxes">
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Confirmed</h2><i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i>
+                                                <h2 class="box-info__title">Confirmed<i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--confirmed">${checkGrow(lastDayConfirmed)}</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Dead</h2><i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i>
+                                            <h2 class="box-info__title">Dead<i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--lost">${checkGrow(lastDayDeadths)}</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Recovered</h2><i class="box-info__icon box-info__icon--heart fas fa-heart"></i>
+                                                <h2 class="box-info__title">Recovered<i class="box-info__icon box-info__icon--heart fas fa-heart"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--saved">${checkGrow(lastDayrecovered)}</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="place-info">
-                                    <h2 class="place-info__title">Last update</h2>
-                                    <span class="place-info__count">${countryLastDay.Date}</span>
                                 </div>
                             </div>
                             `
@@ -250,21 +256,21 @@ searchButton.addEventListener("click",e=>{
                                     <div class="boxes">
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Confirmed</h2><i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i>
+                                            <h2 class="box-info__title">Confirmed<i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--confirmed">-</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Dead</h2><i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i>
+                                            <h2 class="box-info__title">Dead<i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--lost">-</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Recovered</h2><i class="box-info__icon box-info__icon--heart fas fa-heart"></i>
+                                            <h2 class="box-info__title">Recovered<i class="box-info__icon box-info__icon--heart fas fa-heart"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--saved">-</span>
                                         </div>
@@ -287,29 +293,25 @@ searchButton.addEventListener("click",e=>{
                                     <div class="boxes">
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Confirmed</h2><i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i>
+                                            <h2 class="box-info__title">Confirmed<i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--confirmed">${checkGrow(lastWeekConfirmed)}</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Dead</h2><i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i>
+                                            <h2 class="box-info__title">Dead<i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--lost">${checkGrow(lastWeekDeadths)}</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Recovered</h2><i class="box-info__icon box-info__icon--heart fas fa-heart"></i>
+                                            <h2 class="box-info__title">Recovered<i class="box-info__icon box-info__icon--heart fas fa-heart"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--saved">${checkGrow(lastWeekrecovered)}</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="place-info">
-                                    <h2 class="place-info__title">Last update</h2>
-                                    <span class="place-info__count">${countryLastWeek.Date}</span>
                                 </div>
                             </div>
                             `
@@ -322,21 +324,21 @@ searchButton.addEventListener("click",e=>{
                                     <div class="boxes">
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Confirmed</h2><i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i>
+                                                <h2 class="box-info__title">Confirmed<i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--confirmed">-</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Dead</h2><i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i>
+                                            <h2 class="box-info__title">Dead<i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--lost">-</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Recovered</h2><i class="box-info__icon box-info__icon--heart fas fa-heart"></i>
+                                            <h2 class="box-info__title">Recovered<i class="box-info__icon box-info__icon--heart fas fa-heart"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--saved">-</span>
                                         </div>
@@ -359,29 +361,25 @@ searchButton.addEventListener("click",e=>{
                                     <div class="boxes">
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Confirmed</h2><i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i>
+                                            <h2 class="box-info__title">Confirmed<i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--confirmed">${checkGrow(lastMonthConfirmed)}</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Dead</h2><i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i>
+                                            <h2 class="box-info__title">Dead<i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--lost">${checkGrow(lastMonthDeadths)}</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Recovered</h2><i class="box-info__icon box-info__icon--heart fas fa-heart"></i>
+                                            <h2 class="box-info__title">Recovered<i class="box-info__icon box-info__icon--heart fas fa-heart"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--saved">${checkGrow(lastMonthrecovered)}</span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="place-info">
-                                    <h2 class="place-info__title">Last update</h2>
-                                    <span class="place-info__count">${countryLastMonth.Date}</span>
                                 </div>
                             </div>
                             `
@@ -394,21 +392,21 @@ searchButton.addEventListener("click",e=>{
                                     <div class="boxes">
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Confirmed</h2><i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i>
+                                            <h2 class="box-info__title">Confirmed<i class="box-info__icon box-info__icon--viruses fas fa-viruses"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--confirmed">-</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Dead</h2><i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i>
+                                                <h2 class="box-info__title">Dead<i class="box-info__icon box-info__icon--skull fas fa-skull-crossbones"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--lost">-</span>
                                         </div>
 
                                         <div class="box-info">
                                             <span class="box-info__header">
-                                                <h2 class="box-info__title">Recovered</h2><i class="box-info__icon box-info__icon--heart fas fa-heart"></i>
+                                            <h2 class="box-info__title">Recovered<i class="box-info__icon box-info__icon--heart fas fa-heart"></i></h2>
                                             </span>
                                             <span class="box-info__count box-info__count--saved">-</span>
                                         </div>
